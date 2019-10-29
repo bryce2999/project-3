@@ -3,20 +3,16 @@
  * @version 2019-10-08
 */
 import java.io.IOException;
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 public class Main 
 {
-	public static void main(String[] args) throws IOException 
+	public static void main(String[] args) throws IOException, ParseException 
 	{
 		/**
 		 * This project has been divided in sections. 
@@ -57,11 +53,11 @@ public class Main
 		 * You have to identify the format from this given output and will code accordingly.
 		 * Here is a clue, month/day/year hour:minute am/pm 
 		 */
-		
-	    dateTimeOne.dateTimeNow();	    
-	    //System.out.println("Time in the major Time Zone: ");	    
+	    System.out.println("Time in the major Time Zone: ");	
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+	    System.out.println(String.format("Current Date/Time: %s %s", sdf.format(dateTimeOne.getDate()), dateTimeOne.getAmPm()));	    
 	    
-	    System.out.println("\nTime at other zones:");
 	    /**
 		 * We have got time for our server but we have some major time zone in the world.
 		 * GMT is considered as zero degree (Greenwich Mean Time) which is GMT + 0 = GMT
@@ -78,9 +74,12 @@ public class Main
 			BST (90E): 2:14
 			CST (90W): 15:14
 		 */
-	    dateTimeOne.dateTimeOfOtherCity();
-	    System.out.println("\nDate/time at other zones:");
-	    //dateTimeOne.dateTimeNow();
+		   System.out.println("\nTime at other zones:");
+		   System.out.println(
+				   dateTimeOne.getTimeOnServer());
+		  //
+		   dateTimeOne.dateTimeOfOtherCity();
+
 	    
 	    /**
 		 * Now, you are familiar with different time zone.		 * 
@@ -91,9 +90,8 @@ public class Main
 			BST: 10/09/2019 02:26
 			CST: 10/08/2019 15:26
 		 */
+		System.out.println("\nDate/time at other zones:");
 	    dateTimeOne.dateTimeDifferentZone();
-	    System.out.println("\n");	    
-	    
 	    /**
 		 * Now add two more time zone like this: (These two may not be real time zone)
 		 * "ZST", "11/05/2018 19:59" and "AST", "10/01/2020 19:59".
@@ -125,8 +123,10 @@ public class Main
 		 * We need to solve it; however, this section is complete, now we will move to the next section.
 		 */
 	    dateTimeOne.timeZoneHashMap();
-	    
 	    System.out.println("\n");
+	    
+	    //TODO
+	    //finish timeZoneHashMap() method, including two new timezones and create sorted arrays
 	    DateTimeTwo dateTimeTwo = new DateTimeTwo();
 	    /**
 		 * Section 2
@@ -174,9 +174,7 @@ public class Main
 			2004 is a leap year, and Difference: 15 years, 9 months, and 7 days.
 		 * 
 		 */
-	    dateTimeTwo.compareYear();
-	    System.out.println("\n");	    
-	    
+	    dateTimeTwo.compareYear();	    
 	    /**
 		 * Now print out your Hashmap. It may look like (This is the format, I didn't print whole map.
 		 * Key:value
@@ -184,19 +182,23 @@ public class Main
 			2019-05-30:3
 		 */
 	    
-	    dateTimeTwo.dateHashMap();
-	    System.out.println("\nNow the Hashmap:");	    
+	    System.out.println("Now the Hashmap:");	
+	    //dateTimeTwo.dateHashMap();
 	    
 	    /**
 		 * Sort your Hashmap ascending order using keys. 
 		 * You can see the difference between Section 1 sorted list and the Section 2 sorted list.
+		 * 
+		 * The difference between section 1 and section 2 is that section one included 'T' and a time, whereas
+		 * this section used no 'T' and uses an integer key for sorting, rather than a time.
+		 * 
 		 * Write the difference in your documentation, and why?
 		 * Print the sorted Hashmap. It will be like:
 			1900-12-31:8
 			2000-12-15:5
 		 */
+	    System.out.println("Sorted map:");	    
 	    dateTimeTwo.dateHashMapSorted();
-	    System.out.println("\nSorted map:");	    
 	    
 	    /**
 		 * Section 3
@@ -209,9 +211,7 @@ public class Main
 
 		HashMap<String, Integer> asciiVal = new HashMap<String, Integer>();
 		asciiVal.put(stId, asciiAvg);
-		System.out.print("ASCII average: ");
-		//System.out.println(asciiAvg);
-		
+		System.out.print("ASCII average: ");		
 	    /**
 	     * Calculate and print the ASCII average as per PDF. This value for NRMN as a sample.
 		 * Output: 79
@@ -226,21 +226,20 @@ public class Main
 		 */
 		System.out.println("Stations are: "+ mesoEqual.calAsciiEqual());
 		
-		System.out.println("\nUnsroted Hashmap:");
-		asciiVal=mesoEqual.calAsciiEqual();		
-		for (String stIds : asciiVal.keySet()) 
-		{
-			//System.out.println(stIds + " " + asciiVal.get(stIds));
-			//Printing the unsorted map
-		    System.out.println(stIds + " " + asciiVal.get(stIds));		    
-		}		
+		System.out.println("Unsorted Hashmap:");
+		
+		asciiVal=mesoEqual.calAsciiEqual();	
+		
 		
 	    /**
 		 * Sort your hashmap and print here
 		 */
+		TreeMap<String, Integer> sortedMap = new TreeMap<String,Integer>(asciiVal);
 		//System.out.print("##");
 		System.out.println("\nThe sorted map:");
-		new MesoLexicographical(asciiVal);		
+		System.out.println(sortedMap);
+
+		new MesoLexicographical(asciiVal);
 		
 	    /**
 		 * Section 4
